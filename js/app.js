@@ -27,6 +27,7 @@ var Rock = function() {
     this.sprite = 'images/rock.png';
     this.col = Math.floor(Math.random() * (6 - 1)) + 1;
     this.row = 5;
+    this.finalSlot = 0;
 }
 
 Rock.prototype.update = function(dt) {
@@ -61,9 +62,25 @@ Rock.prototype.moveRock = function(x,y) {
         if (this.col > 5) {
             this.col = 1;
         }
-        if (this.row < 1) {
-            this.row = 1;
-            player.row = 2;
+        if (this.row == 1) {
+            if (emptySlots[this.col - 1] == 0) {
+                this.row = 1;
+                player.row = 2;
+                emptySlots[this.col - 1] = 1;
+            /*allRocks.forEach(function(rock) {
+                if (rock.finalSlot )
+            //if (checkEmptySlot(this.col)) {
+                this.row = 1;
+                player.row = 2;
+                this.finalSlot = this.col;
+            //} else {
+            //    this.row = 2;
+            //    player.row = 3;
+            //}*/
+            } else {
+                this.row = 2;
+                player.row = 3;
+            }
         }
         if (this.row > 6) {
             this.row = 6;
@@ -72,7 +89,23 @@ Rock.prototype.moveRock = function(x,y) {
     }
 }
 
-var rock = new Rock;
+var checkEmptySlot = function(col) {
+    allRocks.forEach(function(rock) {
+        if (rock.finalSlot != 0) {
+            if (rock.finalSlot == col) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    });
+}
+
+var allRocks = [];
+allRocks.push(new Rock);
+var emptySlots = [0,0,0,0,0];
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -165,7 +198,10 @@ Player.prototype.handleInput = function(key) {
     }
 
     this.movePlayer(x,y);
-    rock.moveRock(x,y);
+
+    allRocks.forEach(function(rock) {
+        rock.moveRock(x,y);
+    });
 }
 
 /*sets new x and y location of player based off the values sent by the handleInput method.

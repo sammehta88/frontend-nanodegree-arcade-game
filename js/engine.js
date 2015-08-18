@@ -95,7 +95,9 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update(dt);
-        rock.update(dt);
+        allRocks.forEach(function(rock) {
+            rock.update(dt);
+        });
         goal.update();
     }
 
@@ -172,13 +174,15 @@ var Engine = (function(global) {
             enemy.render();
         });
 
-        if (rock.y < player.y) {
-            rock.render();
-            player.render();
-        } else {
-            player.render();
-            rock.render();
-        }
+        allRocks.forEach(function(rock) {
+            if (rock.y < player.y) {
+                rock.render();
+                player.render();
+            } else {
+                player.render();
+                rock.render();
+            }
+        });
     }
 
     /* This function does nothing but it could have been a good place to
@@ -192,14 +196,25 @@ var Engine = (function(global) {
 //x - 63, 84
     function checkCollisions() {
         allEnemies.forEach(function(enemy) {
-            if ((enemy.x > 0) && (Math.abs(player.x - enemy.x) < 85) && (Math.abs(enemy.y - player.y) < 63)) {
-                reset();
-            }
-            if ((rock.x > enemy.x) && (rock.x - enemy.x < 101) && (Math.abs(enemy.y - rock.y) < 63)) {
-                enemy.speed = -1 * enemy.speed;
-                enemy.sprite = 'images/enemy-bug-reflect.png';
-            }
+            allRocks.forEach(function(rock) {
+                if ((enemy.x > 0) && (Math.abs(player.x - enemy.x) < 85) && (Math.abs(enemy.y - player.y) < 63)) {
+                    reset();
+                }
+                if ((rock.x > enemy.x) && (rock.x - enemy.x < 101) && (Math.abs(enemy.y - rock.y) < 63)) {
+                    enemy.speed = -1 * enemy.speed;
+                    enemy.sprite = 'images/enemy-bug-reflect.png';
+                }
+            });
         });
+
+        if (allRocks.length < 5) {
+            allRocks.forEach(function(rock) {
+                if (rock.col == goal.col && rock.row == goal.row) {
+                    allRocks.push(new Rock);
+                    goal = new Goal;
+                }
+            });
+        }
     }
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
