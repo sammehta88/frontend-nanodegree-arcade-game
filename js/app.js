@@ -194,7 +194,7 @@ function spawnEnemies () {
 spawnEnemies();
 
 //new enemies will spawn every 1500 ms
-var enemyMachine = window.setInterval(spawnEnemies, 3000);
+var enemyMachine = window.setInterval(spawnEnemies, 2000);
 
 //instatiates a new Player object
 var player = new Player();

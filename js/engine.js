@@ -193,6 +193,10 @@ var Engine = (function(global) {
             if ((enemy.x > 0) && (Math.abs(player.x - enemy.x) < 85) && (Math.abs(enemy.y - player.y) < 63)) {
                 reset();
             }
+            if ((rock.x > enemy.x) && (rock.x - enemy.x < 101) && (Math.abs(enemy.y - rock.y) < 63)) {
+                enemy.speed = -1 * enemy.speed;
+                enemy.sprite = 'images/enemy-bug-reflect.png';
+            }
         });
     }
     /* Go ahead and load all of the images we know we're going to need to
@@ -204,6 +208,7 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
+        'images/enemy-bug-reflect.png',
         'images/char-boy.png',
         'images/char-cat-girl.png',
         'images/rock.png'
