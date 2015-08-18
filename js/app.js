@@ -1,3 +1,31 @@
+//create rock class which can block enemies
+var Rock = function() {
+
+    this.sprite = 'images/rock.png';
+    this.x = 200;
+    this.y = 300;
+}
+
+Rock.prototype.update = function(dt) {
+}
+
+Rock.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+Rock.prototype.moveRock = function(x,y) {
+    var distY = 83;
+    var distX = 101;
+
+    if ((Math.abs(rock.x - player.x) < 85) && (Math.abs(rock.y - player.y) < 63)) {
+        this.x = this.x + distX * x;
+        this.y = this.y + distY * y;
+    }
+
+    console.log(rock.x, rock.y);
+}
+
+var rock = new Rock;
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -65,7 +93,6 @@ var Player = function() {
     //playerMove method based on which direction the player is moving.
 
 Player.prototype.handleInput = function(key) {
-    console.log(key);
     var x = 0;
     var y = 0;
 
@@ -83,6 +110,7 @@ Player.prototype.handleInput = function(key) {
     }
 
     this.movePlayer(x,y);
+    rock.moveRock(x,y);
 }
 
 /*sets new x and y location of player based off the values sent by the handleInput method.
@@ -93,7 +121,6 @@ Player.prototype.movePlayer = function(x,y) {
     var distX = 101;
     this.x = this.x + distX * x;
     this.y = this.y + distY * y;
-    console.log(x,y);
 }
 
 /* updates player position to prevent player character from
