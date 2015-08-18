@@ -1,9 +1,34 @@
+var spriteWidth = 101;
+var spriteHeight = 83;
+
+//creates Goal class which spawns on a random square.
+//goal of game is to push rock into the Goal.
+var Goal = function() {
+    this.sprite = 'images/selector.png';
+    this.col = Math.floor(Math.random() * (6 - 1)) + 1;
+    this.row = Math.floor(Math.random() * (7 - 2)) + 2;
+    this.activated = false;
+}
+
+Goal.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+Goal.prototype.update = function() {
+    this.x = (this.col - 1) * 101;
+    this.y = (this.row - 1) * 83 - 40;
+}
+
+goal = new Goal;
+
 //create rock class which can block enemies
 var Rock = function() {
 
     this.sprite = 'images/rock.png';
-    this.x = 200;
-    this.y = 300;
+    this.col = Math.floor(Math.random() * (6 - 1)) + 1;
+    this.row = Math.floor(Math.random() * (7 - 2)) + 2;
+    this.x = (this.col - 1) * 101;
+    this.y = (this.row - 1) * 83 - 40;
     this.edgeLeft = false;
     this.edgeRight = false;
     this.edgeTop = false;
