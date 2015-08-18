@@ -170,8 +170,13 @@ var Engine = (function(global) {
             enemy.render();
         });
 
-        player.render();
-        rock.render();
+        if (rock.y < player.y) {
+            rock.render();
+            player.render();
+        } else {
+            player.render();
+            rock.render();
+        }
     }
 
     /* This function does nothing but it could have been a good place to

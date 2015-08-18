@@ -4,9 +4,29 @@ var Rock = function() {
     this.sprite = 'images/rock.png';
     this.x = 200;
     this.y = 300;
+    this.edgeLeft = false;
+    this.edgeRight = false;
+    this.edgeTop = false;
+    this.edgeBottom = false;
 }
 
 Rock.prototype.update = function(dt) {
+    if (rock.x <= 0) {
+        this.edgeLeft = true;
+        rock.x = 0;
+    }
+    if (rock.x >= 400) {
+        this.edgeRight = true;
+        rock.x = 400;
+    }
+    if (rock.y >= (606 - 171 - 40 - 16)) {
+        this.edgeBottom = true;
+        rock.y = 606 - 171 - 40 - 16;
+    }
+    if (rock.y <= 25) {
+        this.edgeTop = true;
+        rock.y = 25;
+    }
 }
 
 Rock.prototype.render = function() {
@@ -17,9 +37,23 @@ Rock.prototype.moveRock = function(x,y) {
     var distY = 83;
     var distX = 101;
 
-    if ((Math.abs(rock.x - player.x) < 85) && (Math.abs(rock.y - player.y) < 63)) {
-        this.x = this.x + distX * x;
-        this.y = this.y + distY * y;
+    if ((Math.abs(rock.x - player.x) < 83) && (Math.abs(rock.y - player.y) < 62)) {
+        if (this.edgeLeft && x !== 0) {
+            player.x = rock.x + 101;
+            //this.y = this.y + distY * y;
+        }
+        else if (this.edgeRight && x !== 0) {
+            player.x = rock.x - 101;
+        }
+        else if (this.edgeTop && y !== 0) {
+            player.y = rock.y + 83;
+        }
+        else if (this.edgeBottom && y !== 0) {
+            player.y = rock.y - 83;
+        } else {
+            this.x = this.x + distX * x;
+            this.y = this.y + distY * y;
+        }
     }
 
     console.log(rock.x, rock.y);
