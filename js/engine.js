@@ -187,6 +187,10 @@ var Engine = (function(global) {
                 reset();
             }
         });
+
+        if (player.y < 25) {
+            reset();
+        }
     }
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when

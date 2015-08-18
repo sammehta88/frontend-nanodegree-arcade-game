@@ -109,9 +109,9 @@ Player.prototype.update = function(dt) {
     else if (this.y > 400) {
         this.y = 400; //good
     }
-    else if (this.y < 50) {
+    /*else if (this.y < 50) {
         this.y = 50; //good
-    }
+    }*/
 }
 
 // Draw the enemy on the screen, required method for game
