@@ -80,7 +80,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
 
     /* This is called by the update function  and loops through all of the
@@ -94,7 +94,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update();
+        player.update(dt);
     }
 
     /* This function initially draws the "game level", it will then call
@@ -138,8 +138,25 @@ var Engine = (function(global) {
 
 
         renderEntities();
+        //renderGrid();
     }
 
+    /*function renderGrid() {
+        var wid = 505;
+        var hei = 606;
+        var dj = 83;
+        var gridx = 505 / 10;
+        var gridy = 606 / dj;
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 3;
+
+        for (var j = 0; j < gridy; j++) {
+            ctx.beginPath();
+            ctx.moveTo(0,j* dj);
+            ctx.lineTo(wid,j* dj);
+            ctx.stroke();
+}
+}*/
     /* This function is called by the render function and is called on each game
      * tick. It's purpose is to then call the render functions you have defined
      * on your enemy and player entities within app.js
@@ -160,9 +177,17 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        player = new Player;
+        allEnemies = [];
     }
-
+//x - 63, 84
+    function checkCollisions() {
+        allEnemies.forEach(function(enemy) {
+            if ((enemy.x > 0) && (Math.abs(player.x - enemy.x) < 85) && (Math.abs(enemy.y - player.y) < 63)) {
+                reset();
+            }
+        });
+    }
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
@@ -172,7 +197,8 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/char-cat-girl.png'
     ]);
     Resources.onReady(init);
 
