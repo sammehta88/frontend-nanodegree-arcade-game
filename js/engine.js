@@ -57,7 +57,7 @@ var Engine = (function(global) {
          * function again as soon as the browser is able to draw another frame.
          */
         win.requestAnimationFrame(main);
-    };
+    }
 
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
@@ -174,6 +174,10 @@ var Engine = (function(global) {
             enemy.render();
         });
 
+        /* loops through all objects within allRocks array and calls render function.
+         * renders player first if player is above (behind) the rock
+         * renders rock first if it is above (behind) the player
+         */
         allRocks.forEach(function(rock) {
             if (rock.y < player.y) {
                 rock.render();
@@ -193,13 +197,21 @@ var Engine = (function(global) {
         player = new Player;
         allEnemies = [];
     }
-//x - 63, 84
+
+    /* function to check whether an enemy has hit a player or a rock
+     * loops through each enemy and checks whether it is within a set distance from the
+     * player object.  If so, the reset function is called
+     */
     function checkCollisions() {
         allEnemies.forEach(function(enemy) {
+            if ((enemy.x > 0) && (Math.abs(player.x - enemy.x) < 85) && (Math.abs(enemy.y - player.y) < 63)) {
+                reset();
+            }
+
+            /* loops through each rock object and checks whether it is within set distance of the enemy object
+             * if so, reverses direction of enemy and changes enemy sprite to a reflected image
+             */
             allRocks.forEach(function(rock) {
-                if ((enemy.x > 0) && (Math.abs(player.x - enemy.x) < 85) && (Math.abs(enemy.y - player.y) < 63)) {
-                    reset();
-                }
                 if ((rock.x > enemy.x) && (rock.x - enemy.x < 101) && (Math.abs(enemy.y - rock.y) < 63)) {
                     enemy.speed = -1 * enemy.speed;
                     enemy.sprite = 'images/enemy-bug-reflect.png';
@@ -207,6 +219,7 @@ var Engine = (function(global) {
             });
         });
 
+/*TODO: move to app.js
         if (allRocks.length < 5) {
             allRocks.forEach(function(rock) {
                 if (rock.col == goal.col && rock.row == goal.row) {
@@ -214,7 +227,7 @@ var Engine = (function(global) {
                     goal = new Goal;
                 }
             });
-        }
+        }*/
     }
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
