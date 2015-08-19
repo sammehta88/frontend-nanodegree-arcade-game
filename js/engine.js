@@ -95,6 +95,10 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update(dt);
+        allRocks.forEach(function(rock) {
+            rock.update(dt);
+        });
+        goal.update();
     }
 
     /* This function initially draws the "game level", it will then call
@@ -162,6 +166,7 @@ var Engine = (function(global) {
      * on your enemy and player entities within app.js
      */
     function renderEntities() {
+        goal.render();
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
@@ -169,7 +174,15 @@ var Engine = (function(global) {
             enemy.render();
         });
 
-        player.render();
+        allRocks.forEach(function(rock) {
+            if (rock.y < player.y) {
+                rock.render();
+                player.render();
+            } else {
+                player.render();
+                rock.render();
+            }
+        });
     }
 
     /* This function does nothing but it could have been a good place to
@@ -183,13 +196,24 @@ var Engine = (function(global) {
 //x - 63, 84
     function checkCollisions() {
         allEnemies.forEach(function(enemy) {
-            if ((enemy.x > 0) && (Math.abs(player.x - enemy.x) < 85) && (Math.abs(enemy.y - player.y) < 63)) {
-                reset();
-            }
+            allRocks.forEach(function(rock) {
+                if ((enemy.x > 0) && (Math.abs(player.x - enemy.x) < 85) && (Math.abs(enemy.y - player.y) < 63)) {
+                    reset();
+                }
+                if ((rock.x > enemy.x) && (rock.x - enemy.x < 101) && (Math.abs(enemy.y - rock.y) < 63)) {
+                    enemy.speed = -1 * enemy.speed;
+                    enemy.sprite = 'images/enemy-bug-reflect.png';
+                }
+            });
         });
 
-        if (player.y < 25) {
-            reset();
+        if (allRocks.length < 5) {
+            allRocks.forEach(function(rock) {
+                if (rock.col == goal.col && rock.row == goal.row) {
+                    allRocks.push(new Rock);
+                    goal = new Goal;
+                }
+            });
         }
     }
     /* Go ahead and load all of the images we know we're going to need to
@@ -201,8 +225,11 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
+        'images/enemy-bug-reflect.png',
         'images/char-boy.png',
-        'images/char-cat-girl.png'
+        'images/char-cat-girl.png',
+        'images/rock.png',
+        'images/selector.png'
     ]);
     Resources.onReady(init);
 
