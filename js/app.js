@@ -126,6 +126,9 @@ Rock.prototype.render = function() {
  */
 Rock.prototype.moveRock = function(x,y) {
 
+    /* creates variables to hold pre-movement info
+     * for both rock object and player object
+     */
     var oldRockCol = this.col;
     var oldRockRow = this.row;
 
@@ -166,8 +169,8 @@ Rock.prototype.moveRock = function(x,y) {
          */
         if (this.row == 1) {
             if (emptySlots[this.col - 1] == 0) {
-                this.row = 1;
-                player.row = 2;
+                //this.row = 1;
+                //player.row = 2;delete
                 emptySlots[this.col - 1] = 1;
             /*allRocks.forEach(function(rock) {
                 if (rock.finalSlot )
@@ -180,16 +183,18 @@ Rock.prototype.moveRock = function(x,y) {
             //    player.row = 3;
             //}*///delete
             } else {
-                this.row = 2;
-                player.row = 3;
+                this.row = oldRockRow;
+                player.row = oldPlayerRow;
+                /*this.row = 2;
+                player.row = 3; delete*/
             }
         }
 
         /* Prevents rock from entering the 6th row
          */
         if (this.row > 5) {
-            this.row = 5;
-            player.row = 4;
+            this.row = oldRockRow;
+            player.row = oldPlayerRow;
         }
 
         var check = checkRocks();
@@ -207,7 +212,11 @@ Rock.prototype.moveRock = function(x,y) {
             allRocks.forEach(function(rock) {
                 if (rock.col == goal.col && rock.row == goal.row) {
                     allRocks.push(new Rock);
-                    goal = new Goal;
+                    if(allRocks.length < 5) {
+                        goal = new Goal;
+                    } else {
+                        goal.row = 10;
+                    }
                 }
             });
         }
