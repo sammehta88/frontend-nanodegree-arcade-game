@@ -198,7 +198,6 @@ Rock.prototype.moveRock = function(x,y) {
             this.row = oldRockRow;
             player.col = oldPlayerCol;
             player.row = oldPlayerRow;
-            console.log('vag');
         }
 
         /* checks if rock object is on the goal tile.  will spawn a new rock
