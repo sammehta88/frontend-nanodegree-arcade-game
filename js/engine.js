@@ -140,6 +140,11 @@ var Engine = (function(global) {
             }
         }
 
+        /* draws white rectangle on top of canvas to counteract the transparency
+         * above the top of the tiles.
+         */
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, 505, 50);
 
         renderEntities();
 
@@ -217,6 +222,10 @@ var Engine = (function(global) {
     function reset() {
         player = new Player;
         allEnemies = [];
+        goal = new Goal;
+        allRocks = [];
+        allRocks.push(new Rock);
+        emptySlots = [0, 0, 0, 0, 0];
     }
 
     /* function to check whether an enemy has hit a player or a rock

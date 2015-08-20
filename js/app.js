@@ -295,40 +295,41 @@ var Enemy = function() {
      this.speed = randomNumber(1,4); //Math.floor(Math.random() * (5 - 1)) + 1; delete
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
+/* Update the enemy's position, each enemy moves at a constant speed
+ * Parameter: dt, a time delta between ticks,
+ */
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
     this.x = this.x + this.speed * dt * 100;
     this.col = Math.ceil(this.x / 101) + 1;
 
+    /* changes column of enemey when it is moving to the left for
+     * better collision detection
+     */
+    if (this.direction == "left") {
+        this.col = this.col - 1;
+    }
+
 };
 
-// Draw the enemy on the screen, required method for game
+/* draws enemy on the screen
+ */
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-
+/* Player class - sets starting point (bottom row, middle column) and image sprite for the player
+ */
 var Player = function() {
-    // The image/sprite for our players, this uses
-    // a helper we've provided to easily load images
     this.sprite = 'images/char-cat-girl.png';
 
-    //sets initial location of player which is bottom row, middle column
     this.col = 3;
     this.row = 6;
-    //this.col =
 };
 
-    //takes key presses and changes position of player according to which
-    //key is pressed.  sends either positive or negative x/y values to
-    //playerMove method based on which direction the player is moving.
+/* Takes key presses and changes position of player according to which
+ * key is pressed.  sends either positive or negative x/y values to
+ * playerMove method based on which direction the player is moving.
+ */
 
 Player.prototype.handleInput = function(key) {
     var x = 0;
