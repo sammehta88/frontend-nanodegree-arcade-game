@@ -1,4 +1,4 @@
-//TODO: clean up code to follow code guide
+
 /* function to generate a random integer with the range as a parameter
  * Followed mozilla developer network's examples on Math.random()
  * Used Math.floor to ensure uniform distribution
@@ -33,8 +33,8 @@ Goal.prototype.render = function() {
  * y position based on dimensions of sprite
  */
 Goal.prototype.update = function() {
-    this.x = (this.col - 1) * 101;
-    this.y = (this.row - 1) * 83 - 40;
+    this.x = (this.col - 1) * SPRITE_WIDTH;
+    this.y = (this.row - 1) * SPRITE_HEIGHT - 40;
 };
 
 /* instantiates a Goal object
@@ -80,8 +80,8 @@ var checkSpawnRocks = function(column) {
  * y position based on dimensions of sprite
  */
 Rock.prototype.update = function(dt) {
-    this.x = (this.col - 1) * 101;
-    this.y = (this.row - 1) * 83 - 40;
+    this.x = (this.col - 1) * SPRITE_WIDTH;
+    this.y = (this.row - 1) * SPRITE_HEIGHT - 40;
 };
 
 /* creates render method for Rock class
@@ -210,8 +210,8 @@ var Enemy = function() {
      */
     this.row = randomNumber(2, 4);
     this.col = -1;
-    this.x = (this.col - 1) * 101;
-    this.y = (this.row - 1) * 83 - 40;
+    this.x = (this.col - 1) * SPRITE_WIDTH;
+    this.y = (this.row - 1) * SPRITE_HEIGHT - 40;
     this.direction = "right";
 
     /* Generates random integer between 1 and 4 to use as speed multiplier.
@@ -227,7 +227,7 @@ var Enemy = function() {
  */
 Enemy.prototype.update = function(dt) {
     this.x = this.x + this.speed * dt * 100;
-    this.col = Math.ceil(this.x / 101) + 1;
+    this.col = Math.ceil(this.x / SPRITE_WIDTH) + 1;
 
     /* changes column of enemey when it is moving to the left for
      * better collision detection
@@ -298,8 +298,8 @@ Player.prototype.movePlayer = function(x, y) {
    being able to move off of the board
  */
 Player.prototype.update = function(dt) {
-    this.x = (this.col - 1) * 101;
-    this.y = (this.row - 1) * 83 - 40;
+    this.x = (this.col - 1) * SPRITE_WIDTH;
+    this.y = (this.row - 1) * SPRITE_HEIGHT - 40;
 };
 
 // Draw the enemy on the screen, required method for game
