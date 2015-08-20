@@ -277,6 +277,7 @@ var Enemy = function() {
     this.col = -1;
     this.x = (this.col - 1) * 101;
     this.y = (this.row - 1) * 83 - 40;
+    this.direction = "right";
     /* Sets initial location of enemy sprite to middle of the
      * random row above and off the left side of the canvas
      * Y location will not change from initial value since
@@ -301,6 +302,7 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x = this.x + this.speed * dt * 100;
+    this.col = Math.ceil(this.x / 101) + 1;
 
 };
 

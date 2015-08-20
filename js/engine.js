@@ -225,17 +225,27 @@ var Engine = (function(global) {
      */
     function checkCollisions() {
         allEnemies.forEach(function(enemy) {
-            if ((enemy.x > 0) && (Math.abs(player.x - enemy.x) < 85) && (Math.abs(enemy.y - player.y) < 63)) {
+            //if ((enemy.x > 0) && (Math.abs(player.x - enemy.x) < 85) && (Math.abs(enemy.y - player.y) < 63)) {
+            if (enemy.col == player.col && enemy.row == player.row) {
                 reset();
             }
 
             /* loops through each rock object and checks whether it is within set distance of the enemy object
              * if so, reverses direction of enemy and changes enemy sprite to a reflected image
+             * TODO: fix bug when bug gets frozen.  one option is only have speed change when going to right
              */
             allRocks.forEach(function(rock) {
-                if ((rock.x > enemy.x) && (rock.x - enemy.x < 101) && (Math.abs(enemy.y - rock.y) < 63)) {
-                    enemy.speed = -1 * enemy.speed;
-                    enemy.sprite = 'images/enemy-bug-reflect.png';
+                if (rock.row == enemy.row && rock.col == enemy.col) {
+                //if ((rock.x > enemy.x) && (rock.x - enemy.x < 101) && (Math.abs(enemy.y - rock.y) < 63)) {
+                    if (enemy.direction == "right") {
+                        enemy.speed = -1 * enemy.speed;
+                        enemy.direction = "left";
+                        enemy.sprite = 'images/enemy-bug-reflect.png';
+                    } else {
+                        enemy.direction = "right"
+                        enemy.sprite = 'images/enemy-bug.png';
+                        enemy.speed = -1 * enemy.speed;
+                    }
                 }
             });
         });
