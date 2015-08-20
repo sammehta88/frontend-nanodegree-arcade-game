@@ -39,7 +39,7 @@ Goal.prototype.update = function() {
 
 /* instantiates a Goal object
  */
-goal = new Goal;
+goal = new Goal();
 
 /* creates Rock class
  * always starts on row 5
@@ -161,9 +161,9 @@ Rock.prototype.moveRock = function(x, y) {
         if (allRocks.length < 5) {
             allRocks.forEach(function(rock) {
                 if (rock.col == goal.col && rock.row == goal.row) {
-                    allRocks.push(new Rock);
+                    allRocks.push(new Rock());
                     if (allRocks.length < 5) {
-                        goal = new Goal;
+                        goal = new Goal();
                     } else {
                         goal.row = 10;
                     }
@@ -188,20 +188,20 @@ var checkRocks = function() {
 
 
 var allRocks = [];
-allRocks.push(new Rock);
+allRocks.push(new Rock());
 
 /* 5 element array with either a 0 or 1 as the value representing the tiles
  * in row 1.  initially all set to 0 since all are empty
  */
 var emptySlots = [0, 0, 0, 0, 0];
 
-// Enemies our player must avoid
+/* Enemies our player must avoid
+ */
 var Enemy = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+    /* The image/sprite for our enemies, this uses
+     * a helper we've provided to easily load images
+     */
     this.sprite = 'images/enemy-bug.png';
 
     /* Generate random integer between 2-4 to set starting row of enemy
@@ -262,17 +262,13 @@ Player.prototype.handleInput = function(key) {
     var x = 0;
     var y = 0;
 
-    if (key == 'left') { // && this.col > 1) {
-        //this.col = this.col - 1;
+    if (key == 'left') {
         x = -1;
-    } else if (key == 'right') { // && this.col < 5) {
-        //this.col = this.col + 1;
+    } else if (key == 'right') {
         x = 1;
     } else if (key == 'up' && this.row > 2) {
-        //this.row = this.row - 1;
         y = -1;
     } else if (key == 'down' && this.row < 6) {
-        //this.row = this.row + 1;
         y = 1;
     }
 
@@ -304,17 +300,6 @@ Player.prototype.movePlayer = function(x, y) {
 Player.prototype.update = function(dt) {
     this.x = (this.col - 1) * 101;
     this.y = (this.row - 1) * 83 - 40;
-
-    /*    if (this.col < 1) {
-            this.col = 1;
-        }
-        else if (this.col > 5) {
-            this.col = 5;
-        }
-    <<<<<<< HEAD
-        /*else if (this.y < 50) {
-            this.y = 50; //good
-        }*/
 };
 
 // Draw the enemy on the screen, required method for game
@@ -329,7 +314,7 @@ var allEnemies = [];
 //the allEnemies array
 
 function spawnEnemies() {
-    allEnemies.push(new Enemy);
+    allEnemies.push(new Enemy());
 }
 
 //instatiates first enemy

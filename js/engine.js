@@ -202,11 +202,11 @@ var Engine = (function(global) {
              * those sorts of things. It's only called once by the init() method.
              */
             function reset() {
-                player = new Player;
+                player = new Player();
                 allEnemies = [];
-                goal = new Goal;
+                goal = new Goal();
                 allRocks = [];
-                allRocks.push(new Rock);
+                allRocks.push(new Rock());
                 emptySlots = [0, 0, 0, 0, 0];
             }
 
