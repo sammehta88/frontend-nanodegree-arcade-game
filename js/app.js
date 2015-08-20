@@ -1,13 +1,9 @@
 //TODO: clean up code to follow code guide
-//TODO: fix bugs - rocks in same squares
-//TODO: move code out of engine and into app where applicable
-//TODO: add random function
-
 /* function to generate a random integer with the range as a parameter
  * Followed mozilla developer network's examples on Math.random()
  * Used Math.floor to ensure uniform distribution
  */
-var randomNumber = function(low,high) {
+var randomNumber = function(low, high) {
     return Math.floor(Math.random() * ((high + 1) - low)) + low;
 };
 
@@ -19,8 +15,8 @@ var SPRITE_HEIGHT = 83;
  */
 var Goal = function() {
     this.sprite = 'images/selector.png';
-    this.col = randomNumber(1,5);
-    this.row = randomNumber(2,5);
+    this.col = randomNumber(1, 5);
+    this.row = randomNumber(2, 5);
 };
 
 /* creates render method for Goal class
@@ -52,7 +48,7 @@ goal = new Goal;
 var Rock = function() {
 
     this.sprite = 'images/rock.png';
-    this.col = randomNumber(1,5);
+    this.col = randomNumber(1, 5);
     this.row = 5;
     this.sameSpot = 0;
 
@@ -71,7 +67,7 @@ var Rock = function() {
 var checkSpawnRocks = function(column) {
     allRocks.forEach(function(rock) {
         if (rock.row == 5 && rock.col == column) {
-            column = randomNumber(1,5);
+            column = randomNumber(1, 5);
             columns = checkSpawnRocks(column);
         }
     });
@@ -102,7 +98,7 @@ Rock.prototype.render = function() {
  * checks if player is moving into the same tile as the rock object
  * if true, then moves rock one tile over
  */
-Rock.prototype.moveRock = function(x,y) {
+Rock.prototype.moveRock = function(x, y) {
 
     /* creates variables to hold pre-movement info
      * for both rock object and player object
@@ -166,7 +162,7 @@ Rock.prototype.moveRock = function(x,y) {
             allRocks.forEach(function(rock) {
                 if (rock.col == goal.col && rock.row == goal.row) {
                     allRocks.push(new Rock);
-                    if(allRocks.length < 5) {
+                    if (allRocks.length < 5) {
                         goal = new Goal;
                     } else {
                         goal.row = 10;
@@ -183,7 +179,7 @@ var checkRocks = function() {
 
     for (i = 0; i < length; i++) {
         for (j = i + 1; j < length; j++) {
-            if(allRocks[i].row == allRocks[j].row && allRocks[i].col == allRocks[j].col) {
+            if (allRocks[i].row == allRocks[j].row && allRocks[i].col == allRocks[j].col) {
                 return 0;
             }
         }
@@ -197,7 +193,7 @@ allRocks.push(new Rock);
 /* 5 element array with either a 0 or 1 as the value representing the tiles
  * in row 1.  initially all set to 0 since all are empty
  */
-var emptySlots = [0,0,0,0,0];
+var emptySlots = [0, 0, 0, 0, 0];
 
 // Enemies our player must avoid
 var Enemy = function() {
@@ -212,7 +208,7 @@ var Enemy = function() {
      * Followed mozilla developer network's examples on Math.random()
      * Used Math.floor to ensure uniform distribution
      */
-    this.row = randomNumber(2,4);
+    this.row = randomNumber(2, 4);
     this.col = -1;
     this.x = (this.col - 1) * 101;
     this.y = (this.row - 1) * 83 - 40;
@@ -223,7 +219,7 @@ var Enemy = function() {
      * at a constant speed, so only want the speed multiplier to be
      * generated once per instance of Enemy
      */
-     this.speed = randomNumber(1,4);
+    this.speed = randomNumber(1, 4);
 };
 
 /* Update the enemy's position, each enemy moves at a constant speed
@@ -266,34 +262,31 @@ Player.prototype.handleInput = function(key) {
     var x = 0;
     var y = 0;
 
-    if (key == 'left') {// && this.col > 1) {
+    if (key == 'left') { // && this.col > 1) {
         //this.col = this.col - 1;
         x = -1;
-    }
-    else if (key == 'right') {// && this.col < 5) {
+    } else if (key == 'right') { // && this.col < 5) {
         //this.col = this.col + 1;
         x = 1;
-    }
-    else if (key == 'up' && this.row > 2) {
+    } else if (key == 'up' && this.row > 2) {
         //this.row = this.row - 1;
         y = -1;
-    }
-    else if (key == 'down' && this.row < 6) {
+    } else if (key == 'down' && this.row < 6) {
         //this.row = this.row + 1;
         y = 1;
     }
 
-    this.movePlayer(x,y);
+    this.movePlayer(x, y);
 
     allRocks.forEach(function(rock) {
-        rock.moveRock(x,y);
+        rock.moveRock(x, y);
     });
 };
 
 /*sets new x and y location of player based off the values sent by the handleInput method.
  *the variable dist determines the distance player travel when each button is pressed
  */
-Player.prototype.movePlayer = function(x,y) {
+Player.prototype.movePlayer = function(x, y) {
     this.col = this.col + x;
     this.row = this.row + y;
 
@@ -312,16 +305,16 @@ Player.prototype.update = function(dt) {
     this.x = (this.col - 1) * 101;
     this.y = (this.row - 1) * 83 - 40;
 
-/*    if (this.col < 1) {
-        this.col = 1;
-    }
-    else if (this.col > 5) {
-        this.col = 5;
-    }
-<<<<<<< HEAD
-    /*else if (this.y < 50) {
-        this.y = 50; //good
-    }*/
+    /*    if (this.col < 1) {
+            this.col = 1;
+        }
+        else if (this.col > 5) {
+            this.col = 5;
+        }
+    <<<<<<< HEAD
+        /*else if (this.y < 50) {
+            this.y = 50; //good
+        }*/
 };
 
 // Draw the enemy on the screen, required method for game
@@ -335,7 +328,7 @@ var allEnemies = [];
 //creates a function to instantiate a new Enemy and add it to
 //the allEnemies array
 
-function spawnEnemies () {
+function spawnEnemies() {
     allEnemies.push(new Enemy);
 }
 
