@@ -1,6 +1,16 @@
-frontend-nanodegree-arcade-game
-===============================
+HOW TO PLAY
 
-Students should use this rubric: https://www.udacity.com/course/viewer#!/c-ud015/l-3072058665/m-3072588797
+Use the arrow keys to move your character around the board.
 
-for self-checking their submission.
+Move into rocks to push them in the direction you are heading. Rocks cannot be moved into the bottom row.
+
+WATCH OUT FOR BUGS
+
+If a bug hits your character, the game will be reset.
+
+OBJECT OF THE GAME
+
+To win, you must fill up the top row with rocks. Pushing a rock into the highlighted tile will cause a
+new rock to spawn. There can only be 5 rocks on the board at one time.
+
+Good Luck!
