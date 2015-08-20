@@ -3,6 +3,10 @@
 //TODO: move code out of engine and into app where applicable
 //TODO: add random function
 
+/* function to generate a random integer with the range as a parameter
+ * Followed mozilla developer network's examples on Math.random()
+ * Used Math.floor to ensure uniform distribution
+ */
 var randomNumber = function(low,high) {
     return Math.floor(Math.random() * ((high + 1) - low)) + low;
 };
@@ -15,9 +19,8 @@ var SPRITE_HEIGHT = 83;
  */
 var Goal = function() {
     this.sprite = 'images/selector.png';
-    this.col = randomNumber(1,5);//Math.floor(Math.random() * (6 - 1)) + 1; delete
-    this.row = randomNumber(2,5);//Math.floor(Math.random() * (7 - 2)) + 2; delete
-    this.activated = false; //delete
+    this.col = randomNumber(1,5);
+    this.row = randomNumber(2,5);
 };
 
 /* creates render method for Goal class
@@ -49,7 +52,7 @@ goal = new Goal;
 var Rock = function() {
 
     this.sprite = 'images/rock.png';
-    this.col = randomNumber(1,5); //Math.floor(Math.random() * (6 - 1)) + 1; delete
+    this.col = randomNumber(1,5);
     this.row = 5;
     this.sameSpot = 0;
 
@@ -59,17 +62,6 @@ var Rock = function() {
     if (allRocks.length > 1) {
         this.col = checkSpawnRocks(this.col);
     }
-        /*this.sameSpot = checkRocks(this.col, this.row);
-        console.log(this.sameSpot);
-        if (this.sameSpot == 1) {
-            console.log('same spto dummy');
-        }
-
-        while (this.sameSpot == 1) {
-            this.col = randomNumber(1,5);
-            this.sameSpot = checkRocks(this.col, this.row);
-            console.log(this.sameSpot);
-        }*///delete
 };
 
 /* loops through allRocks for any rocks that are in row 5
@@ -86,20 +78,6 @@ var checkSpawnRocks = function(column) {
 
     return column;
 };
-/*var checkRocks = function(c,r) {
-    var sameSpot = 0;
-
-    allRocks.forEach(function(rock) {
-        if (rock.row == r && rock.col == c) {
-            sameSpot = 1;
-            return sameSpot;
-        } else {
-            sameSpot = 0;
-        }
-    });
-
-    return sameSpot;
-};*///delete
 
 /* creates update method for the Rock class
  * converts the column and row of the Rock object into an x and
@@ -140,16 +118,6 @@ Rock.prototype.moveRock = function(x,y) {
         this.col = this.col + x;
         this.row = this.row + y;
 
-        /*if (this.row == 2 && y !== 0) {
-            player.row = 3;
-        }
-        else if (this.row == 6  && y !== 0) {
-            player.row = 5;
-        } else {
-            this.col = this.col + x;
-            this.row = this.row + y;
-        }*///delete
-
         /* if rock is on the right or left edge of the canvas, will get pushed
          * to the other side
          */
@@ -169,24 +137,10 @@ Rock.prototype.moveRock = function(x,y) {
          */
         if (this.row == 1) {
             if (emptySlots[this.col - 1] == 0) {
-                //this.row = 1;
-                //player.row = 2;delete
                 emptySlots[this.col - 1] = 1;
-            /*allRocks.forEach(function(rock) {
-                if (rock.finalSlot )
-            //if (checkEmptySlot(this.col)) {
-                this.row = 1;
-                player.row = 2;
-                this.finalSlot = this.col;
-            //} else {
-            //    this.row = 2;
-            //    player.row = 3;
-            //}*///delete
             } else {
                 this.row = oldRockRow;
                 player.row = oldPlayerRow;
-                /*this.row = 2;
-                player.row = 3; delete*/
             }
         }
 
@@ -223,21 +177,6 @@ Rock.prototype.moveRock = function(x,y) {
     }
 };
 
-/*delete
-var checkEmptySlot = function(col) {
-    allRocks.forEach(function(rock) {
-        if (rock.finalSlot != 0) {
-            if (rock.finalSlot == col) {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return false;
-        }
-    });
-};*/
-
 /* checks whether two rocks are in same location*/
 var checkRocks = function() {
     var length = allRocks.length;
@@ -273,26 +212,18 @@ var Enemy = function() {
      * Followed mozilla developer network's examples on Math.random()
      * Used Math.floor to ensure uniform distribution
      */
-    this.row = randomNumber(2,4);//Math.floor(Math.random() * (5 - 2)) + 2; delete
+    this.row = randomNumber(2,4);
     this.col = -1;
     this.x = (this.col - 1) * 101;
     this.y = (this.row - 1) * 83 - 40;
     this.direction = "right";
-    /* Sets initial location of enemy sprite to middle of the
-     * random row above and off the left side of the canvas
-     * Y location will not change from initial value since
-     * enemies only move horizontally
-     */
-    //this.y = (startRow - 1) * (101 / 2);
-    //this.y = 101*3/5;
-    //this.y = 51 + (startRow - 2) * 83;
 
     /* Generates random integer between 1 and 4 to use as speed multiplier.
      * Included in constructor function since each enemy should move
      * at a constant speed, so only want the speed multiplier to be
      * generated once per instance of Enemy
      */
-     this.speed = randomNumber(1,4); //Math.floor(Math.random() * (5 - 1)) + 1; delete
+     this.speed = randomNumber(1,4);
 };
 
 /* Update the enemy's position, each enemy moves at a constant speed

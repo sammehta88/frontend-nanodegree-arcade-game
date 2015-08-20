@@ -151,25 +151,8 @@ var Engine = (function(global) {
         if(emptySlots.length == 5) {
             checkWin();
         }
-        //renderGrid();
     }
 
-    /*function renderGrid() {
-        var wid = 505;
-        var hei = 606;
-        var dj = 83;
-        var gridx = 505 / 10;
-        var gridy = 606 / dj;
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 3;
-
-        for (var j = 0; j < gridy; j++) {
-            ctx.beginPath();
-            ctx.moveTo(0,j* dj);
-            ctx.lineTo(wid,j* dj);
-            ctx.stroke();
-}
-}*/
     /* This function is called by the render function and is called on each game
      * tick. It's purpose is to then call the render functions you have defined
      * on your enemy and player entities within app.js
