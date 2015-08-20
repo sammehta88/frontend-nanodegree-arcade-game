@@ -142,6 +142,10 @@ var Engine = (function(global) {
 
 
         renderEntities();
+
+        if(emptySlots.length == 5) {
+            checkWin();
+        }
         //renderGrid();
     }
 
@@ -187,6 +191,23 @@ var Engine = (function(global) {
                 rock.render();
             }
         });
+    }
+
+    function checkWin() {
+        var length = emptySlots.length;
+        var total = 0;
+
+        for (slot = 0; slot < length; slot++) {
+            total = total + emptySlots[slot];
+        }
+
+        if (total == 5) {
+            ctx.font = "bold 36px sans-serif";
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 171, 505, 342);
+            ctx.fillStyle = "black";
+            ctx.fillText("Congratulations, You Win!", 25, 325);
+        }
     }
 
     /* This function does nothing but it could have been a good place to
