@@ -1,3 +1,12 @@
+/* variables to turn column and row values into x and y values
+ */
+var SPRITE_WIDTH = 101;
+var SPRITE_HEIGHT = 83;
+
+/* 5 element array with either a 0 or 1 as the value representing the tiles
+ * in row 1.  initially all set to 0 since all are empty
+ */
+var emptySlots = [0, 0, 0, 0, 0];
 
 /* function to generate a random integer with the range as a parameter
  * Followed mozilla developer network's examples on Math.random()
@@ -6,9 +15,6 @@
 var randomNumber = function(low, high) {
     return Math.floor(Math.random() * ((high + 1) - low)) + low;
 };
-
-var SPRITE_WIDTH = 101;
-var SPRITE_HEIGHT = 83;
 
 /* creates Goal class which spawns on a random square.
  * sets the column and row for the tile
@@ -36,10 +42,6 @@ Goal.prototype.update = function() {
     this.x = (this.col - 1) * SPRITE_WIDTH;
     this.y = (this.row - 1) * SPRITE_HEIGHT - 40;
 };
-
-/* instantiates a Goal object
- */
-goal = new Goal();
 
 /* creates Rock class
  * always starts on row 5
@@ -128,8 +130,7 @@ Rock.prototype.moveRock = function(x, y) {
          * array to see if there is already a rock in the same column on the
          * 1st row.  If the space is empty, then the rock is moved into the available space
          * and the emptySlots is updated.  If the space is full, then the rock and the player
-         * row is moved back to what it was before it was updated in the code block at the
-         * beginning of this function
+         * row is moved back to what it was before
          */
         if (this.row == 1) {
             if (emptySlots[this.col - 1] == 0) {
@@ -147,6 +148,9 @@ Rock.prototype.moveRock = function(x, y) {
             player.row = oldPlayerRow;
         }
 
+        /* calls function checkRocks to see if there is another rock in the spot this rock
+         * was going to move to.  If so, rock and player do not move.
+         */
         var check = checkRocks();
         if (check == 0) {
             this.col = oldRockCol;
@@ -186,15 +190,6 @@ var checkRocks = function() {
     }
 };
 
-
-var allRocks = [];
-allRocks.push(new Rock());
-
-/* 5 element array with either a 0 or 1 as the value representing the tiles
- * in row 1.  initially all set to 0 since all are empty
- */
-var emptySlots = [0, 0, 0, 0, 0];
-
 /* Enemies our player must avoid
  */
 var Enemy = function() {
@@ -212,7 +207,7 @@ var Enemy = function() {
     this.col = -1;
     this.x = (this.col - 1) * SPRITE_WIDTH;
     this.y = (this.row - 1) * SPRITE_HEIGHT - 40;
-    this.direction = "right";
+    this.direction = 'right';
 
     /* Generates random integer between 1 and 4 to use as speed multiplier.
      * Included in constructor function since each enemy should move
@@ -232,7 +227,7 @@ Enemy.prototype.update = function(dt) {
     /* changes column of enemey when it is moving to the left for
      * better collision detection
      */
-    if (this.direction == "left") {
+    if (this.direction == 'left') {
         this.col = this.col - 1;
     }
 
@@ -248,7 +243,6 @@ Enemy.prototype.render = function() {
  */
 var Player = function() {
     this.sprite = 'images/char-cat-girl.png';
-
     this.col = 3;
     this.row = 6;
 };
@@ -302,32 +296,48 @@ Player.prototype.update = function(dt) {
     this.y = (this.row - 1) * SPRITE_HEIGHT - 40;
 };
 
-// Draw the enemy on the screen, required method for game
+/* Draw the enemy on the screen
+ */
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// creates array to store all Enemy objects
+/* instantiates a Goal object
+ */
+goal = new Goal();
+
+/* creates array to hold rock objects.
+ * instantiates first rock
+ */
+var allRocks = [];
+allRocks.push(new Rock());
+
+/*creates array to store all Enemy objects
+ */
 var allEnemies = [];
 
-//creates a function to instantiate a new Enemy and add it to
-//the allEnemies array
-
+/*creates a function to instantiate a new Enemy and add it to
+ * allEnemies array
+ */
 function spawnEnemies() {
     allEnemies.push(new Enemy());
 }
 
-//instatiates first enemy
+/*instantiates first enemy
+ */
 spawnEnemies();
 
-//new enemies will spawn every 1500 ms
-var enemyMachine = window.setInterval(spawnEnemies, 2000);
+/* new enemies will spawn in intervals between 1000 and 3000 ms
+ */
+window.setInterval(spawnEnemies, randomNumber(1000, 3000));
 
-//instatiates a new Player object
+/* instatiates a new Player object
+ */
 var player = new Player();
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+/* This listens for key presses and sends the keys to your
+ * Player.handleInput() method.
+ */
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',

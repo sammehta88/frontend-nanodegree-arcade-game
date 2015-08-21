@@ -69,13 +69,7 @@ var Engine = (function(global) {
             }
 
             /* This function is called by main (our game loop) and itself calls all
-             * of the functions which may need to update entity's data. Based on how
-             * you implement your collision detection (when two entities occupy the
-             * same space, for instance when your character should die), you may find
-             * the need to add an additional function call here. For now, we've left
-             * it commented out - you may or may not want to implement this
-             * functionality this way (you could just implement collision detection
-             * on the entities themselves within your app.js file).
+             * of the functions which may need to update entity's data.
              */
             function update(dt) {
                 updateEntities(dt);
@@ -145,9 +139,15 @@ var Engine = (function(global) {
                 ctx.fillStyle = "white";
                 ctx.fillRect(0, 0, 505, 50);
 
+                /* Calls function to all characters/items on the board
+                 */
                 renderEntities();
 
-                if (emptySlots.length == 5) {
+                /* Calls function to check whether win condition has been met
+                 * only does this if all rocks needed for the win have already been
+                 * generated
+                 */
+                if (allRocks.length == 5) {
                     checkWin();
                 }
             }
@@ -180,6 +180,11 @@ var Engine = (function(global) {
                 });
             }
 
+            /* For win to occur, a rock needs to be in each column on the top row
+             * loops through emptySlots and adds each value together. If a rock
+             * is in the column then the value is a 1.  If sum == 5 then win condition
+             * has been met and 'you win' message appears
+             */
             function checkWin() {
                 var length = emptySlots.length;
                 var total = 0;
@@ -197,9 +202,7 @@ var Engine = (function(global) {
                 }
             }
 
-            /* This function does nothing but it could have been a good place to
-             * handle game reset states - maybe a new game menu or a game over screen
-             * those sorts of things. It's only called once by the init() method.
+            /* resets game after a loss
              */
             function reset() {
                 player = new Player();
@@ -216,7 +219,6 @@ var Engine = (function(global) {
              */
             function checkCollisions() {
                 allEnemies.forEach(function(enemy) {
-                    //if ((enemy.x > 0) && (Math.abs(player.x - enemy.x) < 85) && (Math.abs(enemy.y - player.y) < 63)) {
                     if (enemy.col == player.col && enemy.row == player.row) {
                         reset();
                     }
@@ -226,12 +228,12 @@ var Engine = (function(global) {
                      */
                     allRocks.forEach(function(rock) {
                         if (rock.row == enemy.row && rock.col == enemy.col) {
-                            if (enemy.direction == "right") {
+                            if (enemy.direction == 'right') {
                                 enemy.speed = -1 * enemy.speed;
-                                enemy.direction = "left";
+                                enemy.direction = 'left';
                                 enemy.sprite = 'images/enemy-bug-reflect.png';
                             } else {
-                                enemy.direction = "right"
+                                enemy.direction = 'right'
                                 enemy.sprite = 'images/enemy-bug.png';
                                 enemy.speed = -1 * enemy.speed;
                             }
