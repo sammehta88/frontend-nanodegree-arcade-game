@@ -14,3 +14,9 @@ To win, you must fill up the top row with rocks. Pushing a rock into the highlig
 new rock to spawn. There can only be 5 rocks on the board at one time.
 
 Good Luck!
+
+
+
+HOW TO RUN
+
+Click on index.html to open the game.  Enjoy!
