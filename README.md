@@ -19,4 +19,4 @@ Good Luck!
 
 HOW TO RUN
 
-Click on index.html to open the game.  Enjoy!
+Click on index.html or head to http://sammehta88.github.io/frontend-nanodegree-arcade-game/ to open the game.  Enjoy!
