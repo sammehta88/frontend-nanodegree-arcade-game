@@ -233,7 +233,7 @@ var Engine = (function(global) {
                                 enemy.direction = 'left';
                                 enemy.sprite = 'images/enemy-bug-reflect.png';
                             } else {
-                                enemy.direction = 'right'
+                                enemy.direction = 'right';
                                 enemy.sprite = 'images/enemy-bug.png';
                                 enemy.speed = -1 * enemy.speed;
                             }
@@ -252,10 +252,9 @@ var Engine = (function(global) {
                     'images/grass-block.png',
                     'images/enemy-bug.png',
                     'images/enemy-bug-reflect.png',
-                    'images/char-boy.png',
                     'images/char-cat-girl.png',
-                    'images/rock.png',
-                    'images/selector.png'
+                    'images/Rock.png',
+                    'images/Selector.png'
                 ]);
                 Resources.onReady(init);
 

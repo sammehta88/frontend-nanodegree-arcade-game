@@ -20,7 +20,7 @@ var randomNumber = function(low, high) {
  * sets the column and row for the tile
  */
 var Goal = function() {
-    this.sprite = 'images/selector.png';
+    this.sprite = 'images/Selector.png';
     this.col = randomNumber(1, 5);
     this.row = randomNumber(2, 5);
 };
@@ -49,7 +49,7 @@ Goal.prototype.update = function() {
  */
 var Rock = function() {
 
-    this.sprite = 'images/rock.png';
+    this.sprite = 'images/Rock.png';
     this.col = randomNumber(1, 5);
     this.row = 5;
     this.sameSpot = 0;
